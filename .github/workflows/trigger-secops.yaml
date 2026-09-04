@@ -1,15 +1,21 @@
-name: Test
+name: Step 1- verify Application push Trigger
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
-  test:
+  verify-push-trigger:
+    name: verify Applicatio push Trigger
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Confirmation
+        run: |
+          echo "Application repository push"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
 
-      - name: Run Test
-        run: echo "Everything is fine"
+  
