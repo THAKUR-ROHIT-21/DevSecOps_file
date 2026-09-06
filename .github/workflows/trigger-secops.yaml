@@ -37,7 +37,7 @@ jobs:
 
                   }
                }'
-      - name: Checkout Exact Application commit
+      - name: Checkout Exact Application Commit
         uses: actions/checkout@v4
         with:
           repository: ${{ github.event.client_payload.repository }}
@@ -45,10 +45,11 @@ jobs:
           path: application
 
       - name: Verify Checked Out Commit
+        working-directory: application
         run: |
-          echo "Application Source Succesffully checked out"
+          echo "Application Source Successfully Checked Out"
           echo "Checked Out Commit SHA:"
-          git -c application rev-parse HEAD
+          git rev-parse HEAD
       
         
 
