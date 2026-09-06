@@ -50,6 +50,3 @@ jobs:
           echo "Application Source Successfully Checked Out"
           echo "Checked Out Commit SHA:"
           git rev-parse HEAD
-      
-        
-
