@@ -51,12 +51,12 @@ jobs:
           echo "Checked Out Commit SHA:"
           git rev-parse HEAD
 
-      - name: Scan For Secret Application 
+      - name: Scan For Secrets in Application
         run: |
           docker run --rm \
           -v "$PWD/application:/repo" \
           zricethezav/gitleaks:latest \
-          detect \ 
+          detect \
           --source=/repo \
           --verbose \
           --redact \
