@@ -50,3 +50,8 @@ jobs:
           echo "Application Source Successfully Checked Out"
           echo "Checked Out Commit SHA:"
           git rev-parse HEAD
+
+      - name: Scan For Secret Application 
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
