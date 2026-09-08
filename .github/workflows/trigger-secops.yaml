@@ -39,22 +39,3 @@ jobs:
                 "commit_sha": "${{ github.sha }}"
               }
             }'
-
-      - name: Checkout Exact Application Commit
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.sha }}
-          path: application
-
-      - name: Verify Checked Out Commit
-        working-directory: application
-        run: |
-          echo "============================================"
-          echo "Application Source Successfully Checked Out"
-          echo "============================================"
-          echo "Expected Commit SHA:"
-          echo "${{ github.sha }}"
-          echo ""
-          echo "Checked Out Commit SHA:"
-          git rev-parse HEAD
-          echo "============================================"
