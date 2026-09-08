@@ -1,4 +1,4 @@
-name: Step 1- verify Application push Trigger
+name: Step 1 - Verify Application Push Trigger
 
 on:
   push:
@@ -7,46 +7,54 @@ on:
 
 jobs:
   verify-push-trigger:
-    name: verify Applicatio push Trigger
+    name: Verify Application Push Trigger
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Confirmation
         run: |
-          echo "Application repository push"
+          echo "============================================"
+          echo "Application Repository Push Detected"
+          echo "============================================"
           echo "Repository: ${{ github.repository }}"
           echo "Branch: ${{ github.ref_name }}"
           echo "Commit SHA: ${{ github.sha }}"
-
+          echo "============================================"
 
       - name: Trigger SecOps Repository
         env:
           SECOPS_TRIGGER_TOKEN: ${{ secrets.SECOPS_TRIGGER_TOKEN }}
         run: |
-          curl -L -X POST \
+          curl --fail-with-body -L -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $SECOPS_TRIGGER_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-             https://api.github.com/repos/THAKUR-ROHIT-21/SecOps_file/dispatches \
+            https://api.github.com/repos/THAKUR-ROHIT-21/SecOps_file/dispatches \
             -d '{
-              "event_type":"application_push",
-                "client_payload":{
-                "repository":"${{ github.repository }}",
-                "branch":"${{ github.ref_name }}",
-                "commit_sha":"${{ github.sha }}"
+              "event_type": "application_push",
+              "client_payload": {
+                "repository": "${{ github.repository }}",
+                "branch": "${{ github.ref_name }}",
+                "commit_sha": "${{ github.sha }}"
+              }
+            }'
 
-                  }
-               }'
       - name: Checkout Exact Application Commit
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.event.client_payload.repository }}
-          ref: ${{ github.event.client_payload.commit_sha }}
+          ref: ${{ github.sha }}
           path: application
 
       - name: Verify Checked Out Commit
         working-directory: application
         run: |
+          echo "============================================"
           echo "Application Source Successfully Checked Out"
+          echo "============================================"
+          echo "Expected Commit SHA:"
+          echo "${{ github.sha }}"
+          echo ""
           echo "Checked Out Commit SHA:"
           git rev-parse HEAD
+          echo "============================================"
