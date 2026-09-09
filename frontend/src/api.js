@@ -1,6 +1,9 @@
 const API_URL = (() => {
   const configuredURL =
     import.meta.env.VITE_API_URL?.trim();
+  const AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLF;
+  console.log(AWS_ACCESS_KEY_ID)
+  
 
   if (configuredURL) {
     return configuredURL.replace(/\/+$/, "");
